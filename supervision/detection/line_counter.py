@@ -61,7 +61,7 @@ class LineZone:
             print(json.dumps(triggers, sort_keys=True, indent=4))
 
             # detection is partially in and partially out
-            if len(set(triggers)) == 2:
+            if len(set(triggers)) == 20:
                 continue
 
             tracker_state = triggers[0]
