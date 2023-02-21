@@ -31,7 +31,8 @@ class Detections:
         n = len(self.xyxy)
         validators = [
             (isinstance(self.xyxy, np.ndarray) and self.xyxy.shape == (n, 4)),
-            (isinstance(self.confidence, np.ndarray) and self.confidence.shape == (n,)),
+            (isinstance(self.confidence, np.ndarray)
+             and self.confidence.shape == (n,)),
             (isinstance(self.class_id, np.ndarray) and self.class_id.shape == (n,)),
             self.tracker_id is None
             or (
@@ -52,6 +53,9 @@ class Detections:
         Returns the number of detections in the Detections object.
         """
         return len(self.xyxy)
+
+    def __str__(self):
+        return f"Detections: xyxy is {self.xyxy}, confidence is {self.confidence}, class_id is {self.class_id}, tracker_id is {self.tracker_id}"
 
     def __iter__(self):
         """
@@ -99,7 +103,8 @@ class Detections:
             >>> detections = Detections.from_yolov5(results)
             ```
         """
-        yolov5_detections_predictions = yolov5_detections.pred[0].cpu().cpu().numpy()
+        yolov5_detections_predictions = yolov5_detections.pred[0].cpu(
+        ).cpu().numpy()
         return cls(
             xyxy=yolov5_detections_predictions[:, :4],
             confidence=yolov5_detections_predictions[:, 4],
