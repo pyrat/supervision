@@ -60,25 +60,25 @@ class LineZone:
             print("Triggers")
             print(json.dumps(triggers, sort_keys=True, indent=4))
 
-           # detection is partially in and partially out
-   if len(set(triggers)) == 2:
-        continue
+            # detection is partially in and partially out
+            if len(set(triggers)) == 2:
+                continue
 
-    tracker_state = triggers[0]
-    # handle new detection
-    if tracker_id not in self.tracker_state:
-        self.tracker_state[tracker_id] = tracker_state
-        continue
+            tracker_state = triggers[0]
+            # handle new detection
+            if tracker_id not in self.tracker_state:
+                self.tracker_state[tracker_id] = tracker_state
+                continue
 
-    # handle detection on the same side of the line
-    if self.tracker_state.get(tracker_id) == tracker_state:
-        continue
+            # handle detection on the same side of the line
+            if self.tracker_state.get(tracker_id) == tracker_state:
+                continue
 
-    self.tracker_state[tracker_id] = tracker_state
-    if tracker_state:
-        self.in_count += 1
-    else:
-        self.out_count += 1
+            self.tracker_state[tracker_id] = tracker_state
+            if tracker_state:
+                self.in_count += 1
+            else:
+                self.out_count += 1
 
 
 class LineZoneAnnotator:
