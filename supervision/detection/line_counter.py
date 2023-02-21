@@ -6,6 +6,7 @@ import numpy as np
 from supervision.detection.core import Detections
 from supervision.draw.color import Color
 from supervision.geometry.core import Point, Rect, Vector
+import json
 
 
 class LineZone:
@@ -35,6 +36,12 @@ class LineZone:
             detections (Detections): The detections for which to update the counts.
 
         """
+
+        print("Detections")
+        print(json.dumps(detections, sort_keys=True, indent=4))
+        print("Tracker state")
+        print(json.dumps(self.tracker_state, sort_keys=True, indent=4))
+
         for xyxy, confidence, class_id, tracker_id in detections:
             # handle detections with no tracker_id
             if tracker_id is None:
@@ -50,25 +57,28 @@ class LineZone:
             ]
             triggers = [self.vector.is_in(point=anchor) for anchor in anchors]
 
-            # detection is partially in and partially out
-            if len(set(triggers)) == 2:
-                continue
+            print("Triggers")
+            print(json.dumps(triggers, sort_keys=True, indent=4))
 
-            tracker_state = triggers[0]
-            # handle new detection
-            if tracker_id not in self.tracker_state:
-                self.tracker_state[tracker_id] = tracker_state
-                continue
+           # detection is partially in and partially out
+   if len(set(triggers)) == 2:
+        continue
 
-            # handle detection on the same side of the line
-            if self.tracker_state.get(tracker_id) == tracker_state:
-                continue
+    tracker_state = triggers[0]
+    # handle new detection
+    if tracker_id not in self.tracker_state:
+        self.tracker_state[tracker_id] = tracker_state
+        continue
 
-            self.tracker_state[tracker_id] = tracker_state
-            if tracker_state:
-                self.in_count += 1
-            else:
-                self.out_count += 1
+    # handle detection on the same side of the line
+    if self.tracker_state.get(tracker_id) == tracker_state:
+        continue
+
+    self.tracker_state[tracker_id] = tracker_state
+    if tracker_state:
+        self.in_count += 1
+    else:
+        self.out_count += 1
 
 
 class LineZoneAnnotator:
