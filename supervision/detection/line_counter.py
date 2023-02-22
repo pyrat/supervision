@@ -37,12 +37,6 @@ class LineZone:
 
         """
 
-        print("Detections")
-        print(detections)
-        print("Tracker state")
-        pp = pprint.PrettyPrinter(indent=4)
-        pp.pprint(self.tracker_state)
-
         for xyxy, confidence, class_id, tracker_id in detections:
             # handle detections with no tracker_id
             if tracker_id is None:
@@ -58,9 +52,6 @@ class LineZone:
                 Point(x=x2, y=y2),
             ]
             triggers = [self.vector.is_in(point=anchor) for anchor in anchors]
-
-            print("Triggers")
-            print(triggers)
 
             # detection is partially in and partially out
             if len(set(triggers)) == 2:
