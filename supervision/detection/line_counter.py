@@ -38,7 +38,7 @@ class LineZone:
         """
 
         print("Detections")
-        print(json.dumps(detections, sort_keys=True, indent=4))
+        print(detections)
         print("Tracker state")
         print(json.dumps(self.tracker_state, sort_keys=True, indent=4))
 
