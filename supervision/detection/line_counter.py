@@ -40,7 +40,8 @@ class LineZone:
         print("Detections")
         print(detections)
         print("Tracker state")
-        pprint(self.tracker_state)
+        pp = pprint.PrettyPrinter(indent=4)
+        pp.pprint(self.tracker_state)
 
         for xyxy, confidence, class_id, tracker_id in detections:
             # handle detections with no tracker_id
