@@ -45,6 +45,7 @@ class LineZone:
         for xyxy, confidence, class_id, tracker_id in detections:
             # handle detections with no tracker_id
             if tracker_id is None:
+                print("No tracker found, skipping.")
                 continue
 
             # we check if all four anchors of bbox are on the same side of vector
@@ -58,7 +59,7 @@ class LineZone:
             triggers = [self.vector.is_in(point=anchor) for anchor in anchors]
 
             print("Triggers")
-            print(json.dumps(triggers, sort_keys=True, indent=4))
+            print(triggers)
 
             # detection is partially in and partially out
             if len(set(triggers)) == 2:
