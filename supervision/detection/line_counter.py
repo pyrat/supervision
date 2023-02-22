@@ -6,7 +6,7 @@ import numpy as np
 from supervision.detection.core import Detections
 from supervision.draw.color import Color
 from supervision.geometry.core import Point, Rect, Vector
-import json
+import pprint
 
 
 class LineZone:
@@ -40,7 +40,7 @@ class LineZone:
         print("Detections")
         print(detections)
         print("Tracker state")
-        print(json.dumps(self.tracker_state, sort_keys=True, indent=4))
+        pprint(self.tracker_state)
 
         for xyxy, confidence, class_id, tracker_id in detections:
             # handle detections with no tracker_id
