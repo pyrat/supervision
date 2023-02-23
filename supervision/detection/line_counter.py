@@ -55,7 +55,7 @@ class LineZone:
 
             # detection is partially in and partially out
             if len(set(triggers)) == 2:
-                self.tracker_state[tracker_id] = True
+                # self.tracker_state[tracker_id] = True
                 continue
 
             # True or False
